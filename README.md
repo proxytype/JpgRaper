@@ -18,3 +18,15 @@ public readonly byte[] SIGNATURE_JPG_JFIF2 = { 0xff, 0xd8, 0xff, 0xee };
 //JPEG EXIF FF D8 FF E1 ?? ?? 45 78 69 66 00 00
 public readonly byte[] SIGNATURE_JPG_EXIF = { 0xff, 0xd8, 0xff, 0xe1 };
 ```
+
+#Example
+
+```csharp
+writer.writeJpg(@"C:\Users\proxytype\Desktop\JpgRaperTest\Images\1.jpg", @"C:\Users\proxytype\Desktop\JpgRaperTest\archives\1.rar", @"C:\Users\proxytype\Desktop\JpgRaperTest\output.jpg", true);
+            
+reader.readJpg(@"C:\Users\proxytype\Desktop\JpgRaperTest\output.jpg", @"C:\Users\proxytype\Desktop\JpgRaperTest\payload.rar", true);
+
+writer.writeJpg(@"C:\Users\proxytype\Desktop\JpgRaperTest\Images\2.jpg", @"C:\Users\proxytype\Desktop\JpgRaperTest\archives\2.zip", @"C:\Users\proxytype\Desktop\JpgRaperTest\output2.jpg", true);
+
+reader.readJpg(@"C:\Users\proxytype\Desktop\JpgRaperTest\output2.jpg", @"C:\Users\proxytype\Desktop\JpgRaperTest\payload2.zip", true);
+```
