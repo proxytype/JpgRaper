@@ -55,15 +55,10 @@ namespace JpgRaperLib
             int read;
             byte[] buffer = new byte[MAX_BUFFER];
             FileStream stream = File.Open(file, FileMode.Open);
-            long counter = 0;
+
             while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
             {
                 writer.Write(buffer, 0, read);
-                counter = counter + read;
-            }
-
-            if (counter % 2 !=0) {
-                writer.Write(0);
             }
 
             stream.Close();

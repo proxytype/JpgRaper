@@ -19,6 +19,7 @@ namespace JpgRaperLib
         }
 
         //https://en.wikipedia.org/wiki/List_of_file_signatures
+        //RAR
         public readonly byte[] SIGNATURE_RAR = { 0x52, 0x61, 0x72, 0x21, 0x1a, 0x07 };
         //PK - ZIP
         public readonly byte[] SIGNATURE_ZIP = { 0x50, 0x4b, 0x3, 0x4 };
