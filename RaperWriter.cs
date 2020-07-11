@@ -23,11 +23,14 @@ namespace JpgRaperLib
                     File.Delete(fileOutput);
                 }
 
+
                 if (raperCommon.getFileType(fileJpg) != RaperCommon.SUPPORT_SIGNATURE.JPG) {
                     throw new Exception("Not Supported JPG (RAW, JFIF, EXIF Only!)");
                 }
 
-                if (raperCommon.getFileType(filePayload) != RaperCommon.SUPPORT_SIGNATURE.RAR && raperCommon.getFileType(filePayload) != RaperCommon.SUPPORT_SIGNATURE.ZIP) {
+                RaperCommon.SUPPORT_SIGNATURE payloadSignature = raperCommon.getFileType(filePayload);
+
+                if (payloadSignature != RaperCommon.SUPPORT_SIGNATURE.RAR && payloadSignature != RaperCommon.SUPPORT_SIGNATURE.ZIP) {
                     throw new Exception("Not Supported Payload (RAR, ZIP Only!)");
                 }
 
@@ -52,16 +55,20 @@ namespace JpgRaperLib
             int read;
             byte[] buffer = new byte[MAX_BUFFER];
             FileStream stream = File.Open(file, FileMode.Open);
+            long counter = 0;
             while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
             {
                 writer.Write(buffer, 0, read);
+                counter = counter + read;
+            }
+
+            if (counter % 2 !=0) {
+                writer.Write(0);
             }
 
             stream.Close();
             stream.Dispose();
         }
-
-
 
     }
 }

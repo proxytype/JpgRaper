@@ -19,10 +19,9 @@ namespace JpgRaperLib
         }
 
         //https://en.wikipedia.org/wiki/List_of_file_signatures
-        //MZ - DLL, EXE
         public readonly byte[] SIGNATURE_RAR = { 0x52, 0x61, 0x72, 0x21, 0x1a, 0x07 };
         //PK - ZIP
-        public readonly byte[] SIGNATURE_ZIP = { 0x50, 0x4b };
+        public readonly byte[] SIGNATURE_ZIP = { 0x50, 0x4b, 0x3, 0x4 };
         //JPEG RAW
         public readonly byte[] SIGNATURE_JPG_RAW = { 0xff, 0xd8, 0xff, 0xdb };
         //JPEG JFIF FF D8 FF E0 00 10 4A 46 49 46 00 01
@@ -42,22 +41,29 @@ namespace JpgRaperLib
 
                 read = reader.Read(buffer, 0, buffer.Length);
 
-                if (buffer.SequenceEqual(SIGNATURE_ZIP))
+                if (buffer.SequenceEqual(new byte[] { SIGNATURE_ZIP[0], SIGNATURE_ZIP[1] }))
                 {
-                    return SUPPORT_SIGNATURE.ZIP;
+                    read = reader.Read(buffer, 0, buffer.Length);
+                    if (buffer.SequenceEqual(new byte[] { SIGNATURE_ZIP[2], SIGNATURE_ZIP[3] }))
+                    {
+                        return SUPPORT_SIGNATURE.ZIP;
+                    }
                 }
 
-                if (buffer.SequenceEqual(new byte[] { SIGNATURE_RAR[0], SIGNATURE_RAR[1] })) {
+                if (buffer.SequenceEqual(new byte[] { SIGNATURE_RAR[0], SIGNATURE_RAR[1] }))
+                {
                     read = reader.Read(buffer, 0, buffer.Length);
 
-                    if (buffer.SequenceEqual(new byte[] { SIGNATURE_RAR[2], SIGNATURE_RAR[3] })) {
+                    if (buffer.SequenceEqual(new byte[] { SIGNATURE_RAR[2], SIGNATURE_RAR[3] }))
+                    {
                         read = reader.Read(buffer, 0, buffer.Length);
 
-                        if (buffer.SequenceEqual(new byte[] { SIGNATURE_RAR[4], SIGNATURE_RAR[5]})) {
+                        if (buffer.SequenceEqual(new byte[] { SIGNATURE_RAR[4], SIGNATURE_RAR[5] }))
+                        {
                             return SUPPORT_SIGNATURE.RAR;
                         }
                     }
-                   
+
                 }
 
                 if (buffer.SequenceEqual(new byte[] { SIGNATURE_JPG_RAW[0], SIGNATURE_JPG_RAW[1] }))
@@ -86,7 +92,7 @@ namespace JpgRaperLib
                 return SUPPORT_SIGNATURE.UNKNOWN;
             }
 
-                
+
         }
     }
 }
