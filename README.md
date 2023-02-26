@@ -1,6 +1,5 @@
 # JpgRaper
-Hide compressed files inside jpg, most jpg encoders looks only on the image stream and ignore any extra infromation,  
-because this "feature" we can inject files into jpg file and keep the behavior as image in most systems.
+By hiding compressed files inside a JPEG, we can take advantage of the fact that most JPEG encoders only analyze the image stream and ignore any additional information. This enables us to inject files into a JPEG and maintain its image-like behavior on most systems.
 
 # Signature Support
 ```csharp
